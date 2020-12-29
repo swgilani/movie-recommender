@@ -1,30 +1,37 @@
-from flask import Flask, request, render_template,redirect,url_for
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, request, render_template, redirect, url_for
+from flask_pymongo import PyMongo
+from pymongo import MongoClient
 import json
 import requests
-
+import jsonify
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:42024@localhost/postgres'
-app.config['SECRET_KEY'] = 'super-secret'
-app.config['SECURITY_REGISTERABLE']=True
-app.config['SECURITY_PASSWORD_SALT'] = 'secret-string'
+app.config["MONGO_URI"] = 'mongodb+srv://wasiq:password123password@cluster0.g3f41.mongodb.net/recommender?retryWrites=true&w=majority'
 app.debug = True
-db = SQLAlchemy(app)
+mongo = PyMongo(app)
 
-
-
-
-
-@app.route('/')
+#Route for home page
+@app.route("/")
 def index():
-    response = requests.get("https://api.themoviedb.org/3/movie/157336/recommendations?api_key=586f9b611ec26170fbc7b228645fa5ca")
+    return render_template("index.html")
+
+#Route to a form where you can search for a movie
+@app.route("/search", methods=["POST","GET"])
+def search():
+    if request.method == "POST":
+        item = request.form["movie_search"]
+        return redirect(url_for("searchmovie", movie=item))
+    
+    else: 
+        return render_template("search.html")
+
+#Routes to a json object with the searched movie.
+@app.route("/searchmovie/<movie>")
+def searchmovie(movie):
+    endpoint = "https://api.themoviedb.org/3/search/movie?api_key=586f9b611ec26170fbc7b228645fa5ca&query={}".format(movie)
+    response = requests.get(endpoint)
     json_data = json.loads(response.text)
     return json_data
 
 if __name__ == "__main__":
-    app.run()
-#comment
-#zawar's comment
-#ruchira xd
-#Shahab Comment 
+    app.run(debug=True)
