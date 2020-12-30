@@ -4,9 +4,6 @@
 <title>Profile</title>
 <meta charset="utf-8"/>
 
-
-
-
 </head>
 
 <body>
@@ -14,6 +11,31 @@
         <input type="text" name="movie_search">
         <input type="submit" value="Search">
     </form>
+
+    <h1>Results</h1>
+
+    <h2> Movies </h2>
+    {% if json_data_movie %}
+        {% for data in json_data_movie['results']: %}
+            <!-- <a href='/post_movie_to_db' name='movieinfo'>  {{ data['title'] }} {{ data['id'] }} </a> <!-->
+            <a href="{{url_for('post_movie_to_database', title= data['title'], id = data['id'] )}}">  {{ data['title'] }}  </a> 
+            <br>
+        {% endfor %}
+
+    {% endif %}
+
+    <h2> TV-Shows </h2>
+
+
+    {% if json_data_tv %}
+        {% for data in json_data_tv['results']: %}
+            <a href="{{url_for('post_tv_to_database', title= data['name'], id = data['id'] )}}">  {{ data['name'] }}  </a>
+            <br>
+        {% endfor %}
+
+    {% endif %}
+
+
 
 </body>
 

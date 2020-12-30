@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Profile</title>
+<meta charset="utf-8"/>
+
+
+
+
+</head>
+
+<body>
+<h1> User Content</h1>
+
+<h2> Movies</h2>
+{% for document in cursor_movies: %}
+    <p>{{ document["Title"] }}</p>  
+{% endfor %}
+
+<button> Get Movie Recommendations </button>
+
+<h2> TV Shows</h2>
+{% for document in cursor_tv: %}
+    <p>{{ document["Title"] }}</p>  
+{% endfor %}
+
+<button> Get TV-Show Recommendations </button>
+
+   
+</body>
+
+
+
+</html>
