@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Profile</title>
-<meta charset="utf-8"/>
+{% extends "base.html" %}
+{% block content %}
 
-</head>
-
-<body>
     <form action='' method="POST">
         <input type="text" name="movie_search">
         <input type="submit" value="Search">
@@ -18,7 +12,8 @@
     {% if json_data_movie %}
         {% for data in json_data_movie['results']: %}
             <!-- <a href='/post_movie_to_db' name='movieinfo'>  {{ data['title'] }} {{ data['id'] }} </a> <!-->
-            <a href="{{url_for('post_movie_to_database', title= data['title'], id = data['id'] )}}">  {{ data['title'] }}  </a> 
+            <a href="{{url_for('post_movie_to_database', title= data['title'], id = data['id'] )}}">  {{ data['title'] }} || </a> 
+            <a href="{{url_for('recommendations_one', recommendation_id = data['id'] )}}"> Get Recommendations  </a>
             <br>
         {% endfor %}
 
@@ -29,16 +24,13 @@
 
     {% if json_data_tv %}
         {% for data in json_data_tv['results']: %}
-            <a href="{{url_for('post_tv_to_database', title= data['name'], id = data['id'] )}}">  {{ data['name'] }}  </a>
+            <a href="{{url_for('post_tv_to_database', title= data['name'], id = data['id'] )}}">  {{ data['name'] }} ||  </a>
+            <a href="{{url_for('recommendations_one', recommendation_id = data['id'] )}}">  Get Recommendations  </a>
+           
+
             <br>
         {% endfor %}
 
     {% endif %}
 
-
-
-</body>
-
-
-
-</html>
+{% endblock %}

@@ -1,0 +1,8 @@
+
+{% extends "base.html" %}
+{% block content %} 
+
+{% for show_title in recommended_shows_information %}
+           <p>{{ show_title['title'] }}</p>
+        {% endfor %}
+{% endblock %}
