@@ -1,22 +1,26 @@
+
+
 body {
+  padding-top: 60px;
   background: #61c0d8;
   color: #333333;
 }
+
 
 h1, h2, h3, h4, h5, h6 {
   color: #444444;
 }
 
 .bg-steel {
-  background-color: #326eb3;
+  background-color: #b0d5ff;
 }
 
 .site-header .navbar-nav .nav-link {
-  color: #cbd5db;
+  color: #c9ff82;
 }
 
 .site-header .navbar-nav .nav-link:hover {
-  color: #ffffff;
+  color: #ff0000;
 }
 
 .site-header .navbar-nav .nav-link.active {
@@ -24,7 +28,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .content-section {
-  background: #ffffff;
+  background: #ff0000;
   padding: 10px 20px;
   border: 1px solid #dddddd;
   border-radius: 3px;
