@@ -1,8 +1,19 @@
+.carousel {
+  width:400px;
+  margin-bottom: 100px;
+  margin-right: 150px;
+  margin-left: 20px;
+}
 
+img {
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
+}
 
 body {
   padding-top: 60px;
-  background: #61c0d8;
+  background: #b7eaf7;
   color: #333333;
 }
 
@@ -12,15 +23,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .bg-steel {
-  background-color: #b0d5ff;
+  background-color: #11004d;
 }
 
 .site-header .navbar-nav .nav-link {
-  color: #c9ff82;
+  color: #d4e4bf;
 }
 
 .site-header .navbar-nav .nav-link:hover {
-  color: #ff0000;
+  color: #facb95;
 }
 
 .site-header .navbar-nav .nav-link.active {
@@ -28,7 +39,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .content-section {
-  background: #ff0000;
+  background: #fda500;
   padding: 10px 20px;
   border: 1px solid #dddddd;
   border-radius: 3px;
@@ -40,7 +51,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a.article-title:hover {
-  color: #054372;
+  color: #198ee7;
   text-decoration: none;
 }
 
@@ -80,4 +91,21 @@ a.article-title:hover {
 
 .account-heading {
   font-size: 2.5rem;
+}
+
+input[type=text] {
+  width: 50%;
+  padding: 10px 10px;
+  margin-top: 15px;
+  margin-bottom: 75px;
+  box-sizing: border-box;
+}
+#heading1
+{
+    font-family: 'Redressed', cursive;
+    font-size: 50px;
+}
+#list{
+ text-indent: 5pt;
+ color:#dddddd
 }

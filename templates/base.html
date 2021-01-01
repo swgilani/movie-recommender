@@ -5,18 +5,10 @@
   <title>Profile</title>
   <meta charset="utf-8"/>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="url_for('bootstrap.min.css') integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel ="stylesheet" type ="text/css" href = "{{ url_for('static', filename='main.css') }}">
-
-  <style>
-  .carousel {
-  width:400px;
-  margin-bottom: 100px;
-  margin-right: 150px;
-  margin-left: 20px;
-  }
-  </style>  
-
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Redressed&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="site-header">
@@ -25,18 +17,17 @@
             <img src="/static/logo.png" class="img-fluid">
           </div>
           <div class="container">
-            <a class="navbar-brand mr-4" href="/">RecommenMovie</a>
+            <a class="navbar-brand mr-4" href="/">Home</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarToggle">
               <div class="navbar-nav mr-auto">
-                <a class="nav-item nav-link" href="{{url_for('index')}}">Home</a>
-                <a class="nav-item nav-link" href="{{url_for('about')}}">About</a>
                 <a class="nav-item nav-link" href="{{url_for('search')}}">Find a Movie!</a>
                 <a class="nav-item nav-link" href="{{url_for('tv_recommendations')}}">TV Recommendations</a>
                 <a class="nav-item nav-link" href="{{url_for('movies_recommendations')}}">Movie Recommendations</a>
                 <a class="nav-item nav-link" href="{{url_for('show_user_content')}}">Viewing History</a>
+                <a class="nav-item nav-link" href="{{url_for('about')}}">About</a>
               </div>
               <!-- Navbar Right Side -->
               <div class="navbar-nav">
