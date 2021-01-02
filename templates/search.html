@@ -12,27 +12,51 @@
         <input type="submit" value="Search">
     </form>
 
-    <h1>Results</h1>
-    <div class="container -3 mb-2 bg-info text-white"">
-        <h2> Movies </h2>
-        {% if json_data_movie %}
-            {% for data in json_data_movie['results']: %}
-                <!-- <a href='/post_movie_to_db' name='movieinfo'>  {{ data['title'] }} {{ data['id'] }} </a> <!-->
-                <a href="{{url_for('post_movie_to_database', title= data['title'], id = data['id'] )}}" id="list">  {{ data['title'] }} || </a> 
-                <a href="{{url_for('recommendations_one', recommendation_id = data['id'] )}}" id="list"> Get Recommendations   </a>
-                <br>
-            {% endfor %}
-        {% endif %}
+    <div class="container mb-2 bg-info text-white">
+        <h1 id = "heading2"> Results </h1>
+    </div>
+
+    <div class="container mb-2 bg-info text-white">
+        <div class="container" id="heading2">
+            <h2 id="heading2"> Movies </h2>
+        </div>
+        <div class="container">
+            <div class="row">
+                    {% if json_data_movie %}
+                        {% for data in json_data_movie['results']: %}
+                            <!-- <a href='/post_movie_to_db' name='movieinfo'>  {{ data['title'] }} {{ data['id'] }} </a> <!-->
+                            <div class="col-6" id="spacing">
+                                <a href="{{url_for('post_movie_to_database', title= data['title'], id = data['id'] )}}" id="list">  {{ data['title'] }} </a>
+                            </div>
+                            <div class="col-6" id="spacing">
+                            <a href="{{url_for('recommendations_one', recommendation_id = data['id'] )}}" id="list"> Get Recommendations   </a>
+                            </div>
+                            <br>
+                        {% endfor %}
+                    {% endif %}
+            </div>
+        </div>
     </div>   
     
-    <div class="container -3 mb-2 bg-info text-white"">
-        <h2> TV-Shows </h2>
-        {% if json_data_tv %}
-            {% for data in json_data_tv['results']: %}
-                <a href="{{url_for('post_tv_to_database', title= data['name'], id = data['id'] )}}" id="list">  {{ data['name'] }} ||  </a>
-                <a href="{{url_for('recommendations_one', recommendation_id = data['id'] )}}" id="list">  Get Recommendations  </a>
-                <br>
-            {% endfor %}
-        {% endif %}
+    <div class="container -3 mb-2 bg-info text-white">
+        <div class="container" id="heading2">
+            <h2 id="heading2"> TV-Shows </h2>
+        </div>
+        <div class="container">
+            <div class="row">
+                {% if json_data_tv %}
+                    {% for data in json_data_tv['results']: %}
+                        <div class="col-6" id="spacing">
+                            <a href="{{url_for('post_tv_to_database', title= data['name'], id = data['id'] )}}" id="list">  {{ data['name'] }} ||  </a>
+                        </div>
+                        <div class="col-6" id="spacing">
+                            <a href="{{url_for('recommendations_one', recommendation_id = data['id'] )}}" id="list">  Get Recommendations  </a>
+                        </div>
+                            <br>                   
+                    {% endfor %}
+                {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

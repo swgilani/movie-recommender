@@ -3,9 +3,10 @@
 <head>
 
   <title>Profile</title>
-  <meta charset="utf-8"/>
+  <meta charset="utf.00000333333333-8"/>
 
   <link rel="stylesheet" href="url_for('bootstrap.min.css') integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.css') }}">
   <link rel ="stylesheet" type ="text/css" href = "{{ url_for('static', filename='main.css') }}">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Redressed&display=swap" rel="stylesheet">
@@ -17,22 +18,27 @@
             <a href='/'><img src="/static/logo.png"  class="img-fluid"></a>
           </div>
           <div class="container">
-        
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarToggle">
               <div class="navbar-nav mr-auto">
+                <a class="nav-item nav-link" href="{{url_for('index')}}">Home</a>
+                {% if "email" in session: %}
                 <a class="nav-item nav-link" href="{{url_for('search')}}">Find a Movie!</a>
                 <a class="nav-item nav-link" href="{{url_for('tv_recommendations')}}">TV Recommendations</a>
                 <a class="nav-item nav-link" href="{{url_for('movies_recommendations')}}">Movie Recommendations</a>
                 <a class="nav-item nav-link" href="{{url_for('show_user_content')}}">Viewing History</a>
+                {%endif%}
                 <a class="nav-item nav-link" href="{{url_for('about')}}">About</a>
               </div>
               <!-- Navbar Right Side -->
-              <div class="navbar-nav">
+              <div class="navbar-nav ">
                 <a class="nav-item nav-link" href="{{url_for('login')}}">Login</a>
                 <a class="nav-item nav-link" href="{{url_for('register')}}">Register</a>
+                {% if "email" in session: %}
+                <a class = "nav-item nav-link" href="{{ url_for('logout')}}">Logout</a> 
+                {%endif%}
               </div>
             </div>
           </div>

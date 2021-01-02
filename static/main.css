@@ -1,37 +1,23 @@
-.carousel {
-  width:400px;
-  margin-bottom: 100px;
-  margin-right: 150px;
-  margin-left: 20px;
-}
-
-img {
-  border-radius: 4px;
-  padding: 5px;
-  width: 150px;
-}
-
 body {
-  padding-top: 60px;
-  background: #b7eaf7;
+  background: #c1e2ff;
   color: #333333;
+  margin-top: 5rem;
 }
-
 
 h1, h2, h3, h4, h5, h6 {
   color: #444444;
 }
 
 .bg-steel {
-  background-color: #11004d;
+  background-color: #008df1;
 }
 
 .site-header .navbar-nav .nav-link {
-  color: #d4e4bf;
+  color: #ffffff;
 }
 
 .site-header .navbar-nav .nav-link:hover {
-  color: #facb95;
+  color: #ffffff;
 }
 
 .site-header .navbar-nav .nav-link.active {
@@ -39,7 +25,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .content-section {
-  background: #fda500;
+  background: #ffffff;
   padding: 10px 20px;
   border: 1px solid #dddddd;
   border-radius: 3px;
@@ -51,7 +37,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a.article-title:hover {
-  color: #198ee7;
+  color: #428bca;
   text-decoration: none;
 }
 
@@ -93,19 +79,74 @@ a.article-title:hover {
   font-size: 2.5rem;
 }
 
-input[type=text] {
-  width: 50%;
-  padding: 10px 10px;
-  margin-top: 15px;
-  margin-bottom: 75px;
-  box-sizing: border-box;
+img {
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
 }
+
 #heading1
 {
+    margin-top: 20px;
     font-family: 'Redressed', cursive;
+    font-size: 75px;
+}
+#heading2
+{
+    border-radius: 10px;
+    margin-top: 10px;
+    font-family: 'Redressed';
     font-size: 50px;
+    text-align: center;
 }
 #list{
- text-indent: 5pt;
- color:#dddddd
+  background: #4897ff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: white;
+}
+#sidebar{
+  background: #008bfd;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
+  color: white;
+}
+#getrecommendations{
+  background: #fda500;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: white;
+
+}
+#spacing{
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: white;
+}
+#center{
+  border-radius: 10px;
+  background-color: #008bfd;
+}
+#bgcontainer{
+  padding: 20px 20px;
+  border-radius: 3px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: #4897ff;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
 }

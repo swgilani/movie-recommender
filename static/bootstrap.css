@@ -604,6 +604,7 @@ progress {
   padding-left: var(--bs-gutter-x, 0.75rem);
   margin-right: auto;
   margin-left: auto;
+  background-color: transparent;
 }
 
 @media (min-width: 576px) {
@@ -3785,6 +3786,7 @@ textarea.form-control-lg {
   padding-left: 0;
   margin-bottom: 0;
   list-style: none;
+  
 }
 
 .nav-link {
@@ -3825,7 +3827,7 @@ textarea.form-control-lg {
 .nav-tabs .nav-item.show .nav-link {
   color: #495057;
   background-color: #fff;
-  border-color: #dee2e6 #dee2e6 #fff;
+  border-color: #dee2e6 #000000 #fff;
 }
 .nav-tabs .dropdown-menu {
   margin-top: -1px;
@@ -5646,6 +5648,8 @@ textarea.form-control-lg {
 
 .carousel {
   position: relative;
+  width:400px;
+  margin: 0 auto;
 }
 
 .carousel.pointer-event {
@@ -5656,7 +5660,13 @@ textarea.form-control-lg {
   position: relative;
   width: 100%;
   overflow: hidden;
+  margin: auto;
 }
+
+.carousel-inner img {
+  margin: auto;
+}
+
 .carousel-inner::after {
   display: block;
   clear: both;
@@ -5672,6 +5682,7 @@ textarea.form-control-lg {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   transition: transform 0.6s ease-in-out;
+  background-color: #ffffff;
 }
 @media (prefers-reduced-motion: reduce) {
   .carousel-item {
