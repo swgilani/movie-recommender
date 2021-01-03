@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+    <div>
+        <img src = "https://image.tmdb.org/t/p/original/{{poster}}" ></img>
+    </div>
+
+    <p> {{title}} </p>
+    <p> {{poster}} </p>
+
+    <p> Include in recommendations?  </p>
+    
+    {% if content_type == "movie" %}
+    
+    <a href="{{url_for('post_movie_to_database', title = title, id = movie_id, liked = 1 )}}"> Like </a>
+    <a href="{{url_for('post_movie_to_database', title = title, id = movie_id, liked = 0 )}}"> Dislike </a>
+    
+    {% endif %}
+
+    {% if content_type == "tv" %}
+    <a href="{{url_for('post_tv_to_database', title = title, id = movie_id, liked = 1 )}}"> Like </a>
+    <a href="{{url_for('post_tv_to_database', title = title, id = movie_id, liked = 0 )}}"> Dislike </a>
+    {% endif %}
+   
+
+{% endblock %}

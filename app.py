@@ -18,9 +18,16 @@ bcrypt = Bcrypt(app)
 
 
 #Route for home page
-@app.route("/")
+@app.route("/", methods =['GET'])
 def index():
-    return render_template("index.html", title='Home')
+    popular_movies = requests.get('https://api.themoviedb.org/3/movie/popular?api_key=586f9b611ec26170fbc7b228645fa5ca&language=en-US&page=1')
+    popular_shows = requests.get('https://api.themoviedb.org/3/tv/popular?api_key=586f9b611ec26170fbc7b228645fa5ca&language=en-US&page=1')
+    
+    json_data_popular = json.loads(popular_movies.text)
+    json_data_populartv = json.loads(popular_shows.text)
+    
+
+    return render_template("index.html", title='Home', json_data_popular = json_data_popular, json_data_populartv = json_data_populartv)
 
 @app.route("/register", methods = ["GET", "POST"])
 def register():
@@ -102,6 +109,21 @@ def searchmovie(movie):
 
     return render_template("search.html", json_data_movie=json_data_movie, json_data_tv=json_data_tv )
 
+#page with info about the content, and the option to add to liked or disliked
+@app.route("/content_info", methods=["POST","GET"])
+def content_info():
+
+
+    poster = request.args.get('poster')
+    title = request.args.get('title')
+    movie_id = request.args.get('id')
+    rating = request.args.get('rating')
+    overview = request.args.get('overview')
+    content_type = request.args.get('content_type')
+
+
+    return render_template("content_info.html", title = title, poster = poster, movie_id = movie_id, overview = overview, rating = rating,content_type = content_type )
+
 
 @app.route("/post_movie_to_db", methods=["POST","GET"])
 def post_movie_to_database():
@@ -114,11 +136,14 @@ def post_movie_to_database():
     #getting title and id 
     title = request.args.get('title')
     movie_id = request.args.get('id')
+    liked = request.args.get('liked')
     print(title)
     
     #posting to db (shows)
     if "email" in session:
-        post2 = {"movie_id": movie_id, "email": session['email'], "Title": title}
+        #post2 = {"movie_id": movie_id, "email": session['email'], "Title": title}
+        post2 = {"movie_id": movie_id, "email": session['email'], "Title": title, 'liked': liked}
+
     #check if the id exists in the db collection already
         exists = mongo.db.movies.find_one({"movie_id": movie_id, "email": session['email']})
         if exists: 
@@ -132,6 +157,7 @@ def post_movie_to_database():
 
     return render_template("search.html")
 
+
 @app.route("/post_tv_to_database", methods=["POST","GET"])
 def post_tv_to_database():
 
@@ -142,11 +168,14 @@ def post_tv_to_database():
     #getting title and id 
     title = request.args.get('title')
     show_id = request.args.get('id')
+    liked = request.args.get('liked')
     print(title)
     
     #posting to db (shows)
     if "email" in session:
-        post2 = {"show_id": show_id, "email": session['email'], "Title": title}
+
+        #like=1, not liked = 0
+        post1 = {"show_id": show_id, "email": session['email'], "Title": title, "liked": liked}
     #check if the id exists in the db collection already
         exists = mongo.db.shows.find_one({"show_id": show_id, "email": session['email']})
         if exists: 
@@ -154,9 +183,10 @@ def post_tv_to_database():
             return render_template("search.html")
 
         else:
-            mongo.db.shows.insert_one(post2)
+            mongo.db.shows.insert_one(post1)
             print("successfully added to user's db")
             return render_template("search.html")
+
 
     return render_template("search.html")
 
@@ -230,7 +260,7 @@ def movies_recommendations():
         #GOD CODE 2.0!!
         tmdb_session = requests.Session()
 
-        cursor_object = mongo.db.movies.find({"email": session["email"]})
+        cursor_object = mongo.db.movies.find({"email": session["email"], "liked": "1"})
 
         id_list = []
 

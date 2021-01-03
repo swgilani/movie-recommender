@@ -1,0 +1,61 @@
+    <div class="row">
+        <div class="col" id ="bgcontainer">
+            <h2 id="heading1">Welcome to ReccomenMovie!</h2>
+            <h3>This is today's popular movies!</h3>
+        </div>
+        <div class="container overflow-hidden" id = "mainpage">
+            <div class="row gx-5">
+                <div class="col" id ="center">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" >
+                            <ol class="carousel-indicators">
+                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                                <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                                <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+                                <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                {% if json_data_popular %}
+                                    <p> {{json_data_popular['results']['poster_path']}} HELLOOOOO</p> 
+                                    {% for x in range(3): %}
+                                        <p>{{json_data_popular['results'][x]['title']}}</p>
+                                    {% endfor%}
+                    
+                                        {% if json_data_popular %}
+                                        
+                                            <div class="carousel-item active">
+                                                <img class="d-block w-100" src="https://image.tmdb.org/t/p/original{{json_data_popular['results'][0]['poster_path']}}" alt="First slide" >
+                                                <div class="carousel-caption d-none d-md-block">
+                                              
+                                                <p> {{json_data_popular['results'][0]['title']}}</p>
+                                                </div>
+                                            </div>
+                            
+                                            <div class="carousel-item">
+                                                <img class="d-block w-100" src="https://image.tmdb.org/t/p/original{{json_data_popular['results'][1]['poster_path']}}" alt="Second slide">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img class="d-block w-100" src="https://image.tmdb.org/t/p/original{{json_data_popular['results'][2]['poster_path']}}" alt="Third slide">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img class="d-block w-100" src="https://image.tmdb.org/t/p/original{{json_data_popular['results'][3]['poster_path']}}" alt="Fourth slide">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img class="d-block w-100" src="https://image.tmdb.org/t/p/original{{json_data_popular['results'][4]['poster_path']}}" alt="Fifth slide">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img class="d-block w-100" src="https://image.tmdb.org/t/p/original{{json_data_popular['results'][5]['poster_path']}}" alt="Sixth slide">
+                                            </div>
+                                    
+                                        {% endif %}
+                                {% endif %}
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                </div>

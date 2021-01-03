@@ -3,7 +3,7 @@
 {% block content %} 
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.css') }}">
 <link rel ="stylesheet" type ="text/css" href = "{{ url_for('static', filename='main.css') }}"> 
-{% for show_title in recommended_shows_information %}
+        {% for show_title in recommended_shows_information %}
            <p>{{ show_title['title'] }}</p>
         {% endfor %}
 {% endblock %}

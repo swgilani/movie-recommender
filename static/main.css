@@ -91,6 +91,21 @@ img {
     font-family: 'Redressed', cursive;
     font-size: 75px;
 }
+
+#heading1container
+{
+
+  background: #6480fc;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 20px;
+  margin-top: 20px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
 #heading2
 {
     border-radius: 10px;
@@ -104,17 +119,17 @@ img {
   padding: 10px 20px;
   border: 1px solid #dddddd;
   border-radius: 10px;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  margin: auto;
   color: white;
 }
 #sidebar{
-  background: #008bfd;
+  background: #6480fc;
   padding: 10px 20px;
   border: 1px solid #dddddd;
-  border-radius: 3px;
+  border-radius: 20px;
   margin-bottom: 20px;
   color: white;
+  
 }
 #getrecommendations{
   background: #fda500;
@@ -126,10 +141,11 @@ img {
   color: white;
 
 }
-#spacing{
+#movieblock{
+  background-color: #008bfd;
+  border-style: ridge;
   border-radius: 10px;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  margin: auto;
   color: white;
 }
 #center{
@@ -145,8 +161,16 @@ img {
 }
 
 img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 40%;
+  width: auto;
+  height: auto;
+}
+
+#displaytitle{
+  
+  text-align: center;
+  padding: 10px;
+  border-radius: auto;
+  margin: auto;
+  color: white;
+  font-size: large;
 }

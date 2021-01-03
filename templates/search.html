@@ -5,56 +5,60 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Redressed&display=swap" rel="stylesheet">
 
+    <div class ="row" id="heading1container" > 
+        
+        <div class = "row" id ="sidebar">
+            <h1>Find a Movie!</h1>
+            <form action='' method="POST">
+                <input type="text" name="movie_search">
+                <input type="submit" value="Search">
+            </form>
+        </div>
 
-    <h1 id ="heading1">Find a Movie!</h1>
-    <form action='' method="POST">
-        <input type="text" name="movie_search">
-        <input type="submit" value="Search">
-    </form>
+        <div class ="row" id="heading1container">
+            <h1> Results </h1>
+        </div>
 
-    <div class="container mb-2 bg-info text-white">
-        <h1 id = "heading2"> Results </h1>
     </div>
 
-    <div class="container mb-2 bg-info text-white">
-        <div class="container" id="heading2">
-            <h2 id="heading2"> Movies </h2>
-        </div>
-        <div class="container">
-            <div class="row">
-                    {% if json_data_movie %}
-                        {% for data in json_data_movie['results']: %}
-                            <!-- <a href='/post_movie_to_db' name='movieinfo'>  {{ data['title'] }} {{ data['id'] }} </a> <!-->
-                            <div class="col-6" id="spacing">
-                                <a href="{{url_for('post_movie_to_database', title= data['title'], id = data['id'] )}}" id="list">  {{ data['title'] }} </a>
-                            </div>
-                            <div class="col-6" id="spacing">
-                            <a href="{{url_for('recommendations_one', recommendation_id = data['id'] )}}" id="list"> Get Recommendations   </a>
-                            </div>
-                            <br>
-                        {% endfor %}
-                    {% endif %}
-            </div>
-        </div>
-    </div>   
-    
-    <div class="container -3 mb-2 bg-info text-white">
-        <div class="container" id="heading2">
-            <h2 id="heading2"> TV-Shows </h2>
-        </div>
-        <div class="container">
-            <div class="row">
-                {% if json_data_tv %}
-                    {% for data in json_data_tv['results']: %}
-                        <div class="col-6" id="spacing">
-                            <a href="{{url_for('post_tv_to_database', title= data['name'], id = data['id'] )}}" id="list">  {{ data['name'] }} ||  </a>
+    <div class="container-fluid">
+        <div class ="row" id="heading1container">
+            <div class = "col" id ="sidebar">
+                <h2 id="heading2"> Movies </h2>
+                {% if json_data_movie %}
+                    {% for data in json_data_movie['results']: %}
+                        <!-- <a href='/post_movie_to_db' name='movieinfo'>  {{ data['title'] }} {{ data['id'] }} </a> <!-->
+                        <div class="row">
+                            <img src = "https://image.tmdb.org/t/p/original{{data['poster_path']}}" ></img>
                         </div>
-                        <div class="col-6" id="spacing">
-                            <a href="{{url_for('recommendations_one', recommendation_id = data['id'] )}}" id="list">  Get Recommendations  </a>
+                        <div class="row">
+                            <a href="{{url_for('content_info', title= data['title'], id = data['id'], poster = data['poster_path'], overview = data['overview'], rating = data['vote_average'], content_type = "movie" )}}" id="list">  {{ data['title'] }} </a>
                         </div>
-                            <br>                   
+                        <div class="row">
+                        <a href="{{url_for('recommendations_one', recommendation_id = data['id'] )}}" id="list"> Get Recommendations   </a>
+                        </div>
+                        <br>
                     {% endfor %}
                 {% endif %}
+            </div>
+            <div class = "col" id ="sidebar">
+                <h2 id="heading2"> TV-Shows </h2>
+                <div class="row">
+                    {% if json_data_tv %}
+                        {% for data in json_data_tv['results']: %}
+                            <div class ="row">
+                                <img src = "https://image.tmdb.org/t/p/original{{data['poster_path']}}" ></img>
+                            </div>
+                            <div class = "row">
+                                <a href="{{url_for('content_info', title= data['name'], id = data['id'], poster = data['poster_path'], overview = data['overview'], rating = data['vote_average'], content_type = 'tv' )}}" id="list">  {{ data['name'] }} testing </a>
+                            </div>
+                            </div>
+                            <div class="row">
+                                <a href="{{url_for('recommendations_one', recommendation_id = data['id'] )}}" id="list">  Get Recommendations  </a>
+                            </div class>
+                            <br>                   
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
         </div>

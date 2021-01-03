@@ -3,35 +3,37 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.css') }}">
 <link rel ="stylesheet" type ="text/css" href = "{{ url_for('static', filename='main.css') }}"> 
     <div class="container">
-        <div class = "container" id="bgcontainer">
+        <div class = "row" id="bgcontainer">
             <h1 id ="heading1" > User Content </h1>
         </div>
         <div class ="row">
-            <div class="container p-3" id = "heading2">
-                <h2> Movies</h2>
+            <div class ="col" id="sidebar">
+                <div class="container p-3" id = "heading2">
+                    <h2> Movies</h2>
+                </div>
+                <div class="list-group">
+                    <form method="POST" action="{{ url_for('delete_movie_from_db') }}">
+                        {% for document in cursor_movies: %}
+                        <input type="checkbox" name="delete_checkbox" value="{{ document['movie_id'] }}" >
+                        <label><a href="{{url_for('recommendations_one', recommendation_id = document['movie_id'], type = 'movie' )}}" id="list">  {{ document["Title"] }} </a></label>
+                        {% endfor %}
+                        <input type='submit' value="Delete">
+                    </form>
+                        
+                </div>
             </div>
-            <div class="list-group">
-                <form method="POST" action="{{ url_for('delete_movie_from_db') }}">
-                    {% for document in cursor_movies: %}
-                       <input type="checkbox" name="delete_checkbox" value="{{ document['movie_id'] }}" >
-                    <label><a href="{{url_for('recommendations_one', recommendation_id = document['movie_id'], type = 'movie' )}}" id="list">  {{ document["Title"] }} </a></label>
+            <div class ="col" id="sidebar">
+                <div class="container p-3" id = "heading2">
+                    <h2> TV Shows</h2>
+                </div>
+                <div class="list-group">
+                    <form method="POST" action="{{ url_for('delete_show_from_db') }}">
+                    {% for document in cursor_tv: %}
+                    <input type="checkbox" name="delete_checkbox" value="{{ document['show_id'] }}" >
+                    <label><a href="{{url_for('recommendations_one', recommendation_id = document['show_id'], type = 'show' )}}" id="list">  {{ document["Title"] }} </a></label>
                     {% endfor %}
-                    <input type='submit' value="Delete">
-                </form>
-                    
-            </div>
-        </div>
-        <div class ="row">
-            <div class="container p-3" id = "heading2">
-                <h2> TV Shows</h2>
-            </div>
-            <div class="list-group">
-                <form method="POST" action="{{ url_for('delete_show_from_db') }}">
-                {% for document in cursor_tv: %}
-                <input type="checkbox" name="delete_checkbox" value="{{ document['show_id'] }}" >
-                <label><a href="{{url_for('recommendations_one', recommendation_id = document['show_id'], type = 'show' )}}" id="list">  {{ document["Title"] }} </a></label>
-                {% endfor %}
-                <input type="submit" value="Delete">
+                    <input type="submit" value="Delete">
+                </div>
             </div>
         </div>
     </div>
