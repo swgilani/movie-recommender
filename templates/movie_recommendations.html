@@ -1,8 +1,49 @@
 
 {% extends "base.html" %}
 {% block content %} 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel ="stylesheet" type ="text/css" href = "{{ url_for('static', filename='main.css') }}">
+<div class = "container" >
+        <div class ="row" id = "filtercontainer">
+                <div class = "col-4"><h3 id="heading3">Filters: </h3></div>
+                <div class = "col-4">
+                        <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Genre Filter
+                                </button>
+                                <div class ="dropdown-menu">
+                                        <form id="genre_filter_form" method="POST" action="{{ url_for('movies_recommendations') }}">
+                                                {% for movie_genre in json_data_movie_genre['genres'] %}
+                                                <a class="dropdown-item">{{ movie_genre['name'] }} <input type="checkbox" name="genre_checkbox" value="{{ movie_genre['id'] }}" ></a>
+                                                {% endfor %}
+                                                <label>Runtime Filters:</label><br/>
+                                                <input type="radio" name="runtime" id="less_than_hour" value="less_than_hour" autocomplete="off"> Less than an hour <br/>
+                                                <input type="radio" name="runtime" id="hour_to_hour_half" value="hour_to_hour_half" autocomplete="off"> One hour to hour and half <br/>
+                                                <input type="radio" name="runtime" id="hour_half_to_two_hours" value="hour_half_to_two_hours" autocomplete="off"> Hour and half to two hours <br/> 
+                                                <input type="radio" name="runtime" id="more_than_two_hours" value="more_than_two_hours" autocomplete="off"> Two hours and above
+                                        </form>
+                                </div>
+                                <input  type='submit' value="Apply Filter" form="genre_filter_form">
+                        </div>
+                       
+                </div>
+                
+                
+          
+        </div>
+</div>
 
-{% for movie_title in recommended_movie_information %}
-           <p>{{ movie_title['title'] }}</p>
-        {% endfor %}
+<div class = "container">
+        <div class ="row" id = "filtercontainer">
+                <h1 id="heading1"> Your Recommendations </h1>
+        </div>
+        <div class ="row" id= "heading1container">
+                {% for movie_title in recommended_movie_information %}
+                        <div class ="row" id= "movieblock">
+                                <h2 id="displaytitle">{{ movie_title['title'] }}</h2>
+                        </div>
+                {% endfor %}
+        </div>
+</div>
 {% endblock %}
+

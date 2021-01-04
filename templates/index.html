@@ -1,14 +1,15 @@
 
 {% extends "base.html" %}
 {% block content %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.css') }}">
 <link rel ="stylesheet" type ="text/css" href = "{{ url_for('static', filename='main.css') }}"> 
 
-<div class = "container-fluid">
+<div class = "container-fluid" id ="maincontainer"> 
     <div class ="row" id="heading1container"><h1 id="heading1">Today's Popular Movies and TV Shows!</h1></div>
-    <div class ="row">
-        <div class="col" id ="sidebar">
-            <h1 id="heading2">TV Shows: </h1>
+    <div class ="row" id="heading1container">
+        <div class="col" id="heading2container">
+            <h2 id="heading2">TV Shows: </h2>
             {% if json_data_popular %}
                 {% for data in json_data_populartv['results']: %}
                 
@@ -17,21 +18,21 @@
                         <img src = "https://image.tmdb.org/t/p/original{{data['poster_path']}}" width=auto height=auto></img>
                     </div>
                     <div class="row">
-                        <h3>Title:</h3>
+                        <h3 id="heading3">Title:</h3>
                         <a href="show_title['title']" id ="displaytitle"> {{ data['name'] }} </a>
-                        <h3>Overview:</h3>
-                        <p>{{ data['overview'] }}</p>
+                        <h3 id="heading3">Overview:</h3>
+                        <p id = "overview">{{ data['overview'] }}</p>
                     </div>
                     <div class="row">
-                        <h3>Rating:</h3>
+                        <h3 id="heading3">Rating:</h3>
                         <p id ="displaytitle"> {{ data['vote_average'] }} </p>
                     </div>
                 </div>
                 {% endfor %}
             {% endif %}
         </div>
-        <div class="col" id ="sidebar">
-            <h1 id="heading2">Movies: </h1>
+        <div class="col" id="heading2container">
+            <h2 id="heading2">Movies: </h2>
             {% if json_data_popular %}
                 {% for data in json_data_popular['results']: %}
                 <div id="movieblock"> 
@@ -39,13 +40,13 @@
                         <img src = "https://image.tmdb.org/t/p/original{{data['poster_path']}}" width=50% height=50%></img>
                     </div>
                     <div class="row">
-                        <h3>Title:</h3>
+                        <h3 id="heading3">Title:</h3>
                         <a href="show_title['title']" id ="displaytitle"> {{ data['title'] }} </a>
-                        <h3>Overview:</h3>
-                        <p>{{ data['overview'] }}</p>
+                        <h3 id="heading3">Overview:</h3>
+                        <p id = "overview">{{ data['overview'] }}</p>
                     </div>
                     <div class="row">
-                        <h3>Rating:</h3>
+                        <h3 id="heading3">Rating:</h3>
                         <p id ="displaytitle"> {{ data['vote_average'] }} </p>
                     </div>
                 </div>

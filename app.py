@@ -113,7 +113,6 @@ def searchmovie(movie):
 @app.route("/content_info", methods=["POST","GET"])
 def content_info():
 
-
     poster = request.args.get('poster')
     title = request.args.get('title')
     movie_id = request.args.get('id')
@@ -227,21 +226,9 @@ def delete_show_from_db():
 
 
 
-
-
-
-
-
-
-    
-
-
-
-
 ################################################################################################################
 
 #giving movie and tv-show recommendations 
-
 @app.route("/show_user_content", methods=["POST","GET"])
 def show_user_content():
     if "email" in session:
@@ -274,15 +261,19 @@ def movies_recommendations():
             endpointMovie = "https://api.themoviedb.org/3/movie/{}/recommendations?api_key=586f9b611ec26170fbc7b228645fa5ca".format(item)
             responseMovie = tmdb_session.get(endpointMovie)
             json_data_movie = json.loads(responseMovie.text)  
+            
+            
             counter = 0 
                 
             for data in json_data_movie['results']:
-                if counter < 5: 
+                #cursor_object_watched = mongo.db.movies.find({"movie_id": data['id']})
+
+
+                if counter < 5:                   
                     all_recommended_movies_ids.append(data['id'])
                     counter += 1
                 else:
                     break
-
 
         shuffled_recommended_list = random.sample(all_recommended_movies_ids,len(all_recommended_movies_ids))
 
@@ -297,10 +288,50 @@ def movies_recommendations():
             recommended_movie_information.append(temp_dict.copy())
 
 
-        #loop this shit into the html
-    # print(recommended_movie_information)
+        #getting the genres of all movies using the tmdb api
+        get_genre_endpoint = "https://api.themoviedb.org/3/genre/movie/list?api_key=586f9b611ec26170fbc7b228645fa5ca"
+        response_get_genre = tmdb_session.get(get_genre_endpoint)
+        json_data_movie_genre = json.loads(response_get_genre.text)
 
-        return render_template("movie_recommendations.html", recommended_movie_information=recommended_movie_information)
+        get_runtime_endpoint = "https://api.themoviedb.org/3/movie/ { } /?api_key=586f9b611ec26170fbc7b228645fa5ca"
+        #assign filtered_genres to None because there are no filters when user first comes to the recommendations page
+        filtered_genres = None
+        #get all the genre id's that the user filtered in the movies_recommendations.html page 
+        if request.method == "POST":
+            filtered_genres = request.form.getlist('genre_checkbox')
+           
+        #if filtered_generes exists, then update the list of recommended movies with only the filtered genres
+        if filtered_genres:
+            filtered_list = []
+            
+            for movie in recommended_movie_information:
+                temp_movie_id = movie["id"]
+                #for each movie in users recommendations, we grab the id and run the movies_details endpoint to get information on the genres of that specific movie
+                #then compare if the movie falls under the list of genres the user picked. if yes then add to recommendations, if not then dont show in recommendations
+                get_movie_information_endpoint = "https://api.themoviedb.org/3/movie/{}?api_key=586f9b611ec26170fbc7b228645fa5ca".format(temp_movie_id)
+                get_movie_information = tmdb_session.get(get_movie_information_endpoint)
+                json_data_movie_information = json.loads(get_movie_information.text)
+
+                #checks if the genre id of the movie is in the user's genre filters. if yes then it adds the movie_id to the filtered_list
+                for genre_id in json_data_movie_information["genres"]:
+                    if str(genre_id["id"]) in filtered_genres:
+                        filtered_list.append(temp_movie_id)
+
+            #finds the movie title of the filtered movie ids and returns them to the html page
+            filtered_movie_information = []
+            for movie_name in filtered_list:
+                endpointMovie = "https://api.themoviedb.org/3/movie/{}?api_key=586f9b611ec26170fbc7b228645fa5ca".format(movie_name)
+                responseMovie = tmdb_session.get(endpointMovie)
+                json_data_movie = json.loads(responseMovie.text) 
+
+                temp_dict = {"id":json_data_movie["id"], "title":json_data_movie['original_title']}
+                filtered_movie_information.append(temp_dict.copy())
+
+            return render_template("movie_recommendations.html", recommended_movie_information=filtered_movie_information, json_data_movie_genre=json_data_movie_genre)
+
+                            
+            
+        return render_template("movie_recommendations.html", recommended_movie_information=recommended_movie_information, json_data_movie_genre=json_data_movie_genre )
 
     else:
         return "<h1 style='background-color:red;'>stop fkin wth our code</h1>"
@@ -354,23 +385,66 @@ def tv_recommendations():
             recommended_shows_information.append(temp_dict.copy())
 
 
-        return render_template("tv_recommendations.html", recommended_shows_information=recommended_shows_information)
+    #getting the genres of all movies using the tmdb api
+        get_genre_endpoint = "https://api.themoviedb.org/3/genre/tv/list?api_key=586f9b611ec26170fbc7b228645fa5ca"
+        response_get_genre = tmdb_session.get(get_genre_endpoint)
+        json_data_show_genre = json.loads(response_get_genre.text)
+        #assign filtered_genres to None because there are no filters when user first comes to the recommendations page
+        filtered_genres = None
+        #get all the genre id's that the user filtered in the movies_recommendations.html page 
+        if request.method == "POST":
+            filtered_genres = request.form.getlist('genre_checkbox')
+           
+        #if filtered_generes exists, then update the list of recommended movies with only the filtered genres
+        if filtered_genres:
+            
+            filtered_list = []
+            
+            for show in recommended_shows_information:
+                temp_show_id = show["id"]
+                #for each movie in users recommendations, we grab the id and run the movies_details endpoint to get information on the genres of that specific movie
+                #then compare if the movie falls under the list of genres the user picked. if yes then add to recommendations, if not then dont show in recommendations
+                get_show_information_endpoint = "https://api.themoviedb.org/3/tv/{}?api_key=586f9b611ec26170fbc7b228645fa5ca".format(temp_show_id)
+                get_show_information = tmdb_session.get(get_show_information_endpoint)
+                json_data_show_information = json.loads(get_show_information.text)
+
+                #checks if the genre id of the movie is in the user's genre filters. if yes then it adds the movie_id to the filtered_list
+                for genre_id in json_data_show_information["genres"]:                   
+                    if str(genre_id["id"]) in filtered_genres:
+                        filtered_list.append(temp_show_id)
+
+            #finds the movie title of the filtered movie ids and returns them to the html page
+            filtered_show_information = []
+            for show_name in filtered_list:
+                endpointShow = "https://api.themoviedb.org/3/tv/{}?api_key=586f9b611ec26170fbc7b228645fa5ca".format(show_name)
+                responseShow = tmdb_session.get(endpointShow)
+                json_data_show = json.loads(responseShow.text) 
+
+                temp_dict = {"id":json_data_show["id"], "title":json_data_show['name']}
+                filtered_show_information.append(temp_dict.copy())
+                print(filtered_show_information)
+
+            return render_template("tv_recommendations.html", recommended_shows_information=filtered_show_information, json_data_show_genre=json_data_show_genre)
+
+        return render_template("tv_recommendations.html", recommended_shows_information=recommended_shows_information, json_data_show_genre=json_data_show_genre)
     else:
         return "<h1 style='background-color:red;'>stop fkin wth our code</h1>"
 
     #Recommendation list of a specific movie that user picks.
 
-@app.route("/recommendations_one/<string:recommendation_id>", methods=["POST","GET"])
+@app.route("/recommendations_one/<recommendation_id>", methods=["POST","GET"])
 def recommendations_one(recommendation_id):
 
     type_of_content = request.args.get('type')
 
 
     if type_of_content == 'movie':
+        print(recommendation_id)
         endpoint_recommendation= "https://api.themoviedb.org/3/movie/{}/recommendations?api_key=586f9b611ec26170fbc7b228645fa5ca".format(recommendation_id)
     
 
-    else: 
+    elif type_of_content == 'show': 
+        print(recommendation_id)
         endpoint_recommendation= "https://api.themoviedb.org/3/tv/{}/recommendations?api_key=586f9b611ec26170fbc7b228645fa5ca".format(recommendation_id)
 
 

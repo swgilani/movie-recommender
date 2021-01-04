@@ -1,38 +1,44 @@
 {% extends "base.html" %}
 {% block content %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.css') }}">
 <link rel ="stylesheet" type ="text/css" href = "{{ url_for('static', filename='main.css') }}"> 
-    <div class="container">
-        <div class = "row" id="bgcontainer">
+    <div class="container-fluid">
+        <div class = "row" id="heading1container">
             <h1 id ="heading1" > User Content </h1>
         </div>
-        <div class ="row">
-            <div class ="col" id="sidebar">
-                <div class="container p-3" id = "heading2">
-                    <h2> Movies</h2>
-                </div>
+        <div class ="row" id="heading1container">
+            <div class ="col" id="heading2container">
+                <h2 id="heading2"> Movies</h2>
                 <div class="list-group">
-                    <form method="POST" action="{{ url_for('delete_movie_from_db') }}">
-                        {% for document in cursor_movies: %}
-                        <input type="checkbox" name="delete_checkbox" value="{{ document['movie_id'] }}" >
-                        <label><a href="{{url_for('recommendations_one', recommendation_id = document['movie_id'], type = 'movie' )}}" id="list">  {{ document["Title"] }} </a></label>
-                        {% endfor %}
-                        <input type='submit' value="Delete">
-                    </form>
-                        
+                    <div class ="form-group">
+                        <form method="POST" action="{{ url_for('delete_movie_from_db') }}">
+                            {% for document in cursor_movies: %}
+                                <div class ="row" id = "usercontent">
+                                    <div class ="col"><label style="margin: 15px"><a href="{{url_for('recommendations_one', recommendation_id = document['movie_id'], type = 'movie' )}}" id="list">  {{ document["Title"] }} </a></label></div>
+                                    <div class ="col-2"><input type="checkbox" name="delete_checkbox" value="{{ document['movie_id'] }}" ></div>
+                                </div>
+                            {% endfor %}
+                            <div class = "row-2" id = "usercontent">
+                                <input type="submit" value="Delete">
+                            </div>
+                        </form> 
+                    </div>    
                 </div>
             </div>
-            <div class ="col" id="sidebar">
-                <div class="container p-3" id = "heading2">
-                    <h2> TV Shows</h2>
-                </div>
+            <div class ="col" id="heading2container">
+                <h2 id="heading2"> TV Shows</h2>
                 <div class="list-group">
                     <form method="POST" action="{{ url_for('delete_show_from_db') }}">
                     {% for document in cursor_tv: %}
-                    <input type="checkbox" name="delete_checkbox" value="{{ document['show_id'] }}" >
-                    <label><a href="{{url_for('recommendations_one', recommendation_id = document['show_id'], type = 'show' )}}" id="list">  {{ document["Title"] }} </a></label>
+                        <div class ="row" id = "usercontent">
+                            <div class ="col"><label style="margin: 15px"><a href="{{url_for('recommendations_one', recommendation_id = document['show_id'], type = 'show' )}}" id="list">  {{ document["Title"] }} </a></label></div>
+                            <div class ="col-2"><input type="checkbox" name="delete_checkbox" value="{{ document['show_id'] }}" ></div>
+                        </div>
                     {% endfor %}
-                    <input type="submit" value="Delete">
+                    <div class = "row-2" id = "usercontent">
+                        <input type="submit" value="Delete">
+                    </div>
                 </div>
             </div>
         </div>
