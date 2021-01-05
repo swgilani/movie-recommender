@@ -251,12 +251,13 @@ def movies_recommendations():
 
         id_list = []
 
+        #adds the ids of the liked movies from the db to a list
         for item in cursor_object:
             id_list.append(item['movie_id'])
         
         all_recommended_movies_ids = []
 
-
+        
         for item in id_list:
             endpointMovie = "https://api.themoviedb.org/3/movie/{}/recommendations?api_key=586f9b611ec26170fbc7b228645fa5ca".format(item)
             responseMovie = tmdb_session.get(endpointMovie)
@@ -264,16 +265,17 @@ def movies_recommendations():
             
             
             counter = 0 
-                
+            
+            #adds the ids of the first 5 recommended movies for each id from id_list to another list 
             for data in json_data_movie['results']:
-                #cursor_object_watched = mongo.db.movies.find({"movie_id": data['id']})
-
-
-                if counter < 5:                   
+                
+                #if the movie is not part of the db and not part of the rec list, add the movie to the list 
+                if counter < 5 and (str(data['id']) not in id_list) and (data['id'] not in all_recommended_movies_ids):                   
                     all_recommended_movies_ids.append(data['id'])
                     counter += 1
-                else:
+                elif counter >= 5: 
                     break
+  
 
         shuffled_recommended_list = random.sample(all_recommended_movies_ids,len(all_recommended_movies_ids))
 
@@ -364,12 +366,17 @@ def tv_recommendations():
             json_data_show = json.loads(responseShow.text)  
             counter = 0 
                 
+
             for data in json_data_show['results']:
-                if counter < 5: 
+
+                #if the show is not part of the db and not part of the rec list, add the show to the list 
+                if counter < 5 and (str(data['id']) not in id_list) and (data['id'] not in all_recommended_shows_ids):                   
+
                     all_recommended_shows_ids.append(data['id'])
                     counter += 1
-                else:
+                elif counter >= 5: 
                     break
+   
 
 
         shuffled_recommended_list = random.sample(all_recommended_shows_ids,len(all_recommended_shows_ids))
