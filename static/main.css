@@ -121,6 +121,7 @@ a.article-title:hover {
 
 #heading2
 {
+    font-family:'Courier New', Courier, monospace;
     border-radius: 10px;
     font-family: 'Righteous', cursive;
     font-size: 50px;
@@ -130,6 +131,7 @@ a.article-title:hover {
 
 #heading2container
 {
+  
   background:#230e52;
   padding: 10px 20px #dddddd;
   border-radius: 20px;
@@ -138,7 +140,7 @@ a.article-title:hover {
 
 #heading3
 {
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode';
+    font-family:'Courier New', Courier, monospace;
     font-size: 25px;
     color: rgb(255, 255, 255);
     margin-top:10px;
@@ -147,6 +149,7 @@ a.article-title:hover {
 }
 
 #list{
+  font-family:'Courier New', Courier, monospace;
   background: #032c3f;
   padding: 20px 20px;
   border: 1px solid;
@@ -173,13 +176,13 @@ a.article-title:hover {
   margin: auto;
   color: white;
   font-size: 25pt;
-  font-family: Impact, 'Arial Narrow Bold', sans-serif;
+  font-family:'Courier New', Courier, monospace;
 }
 
 #overview
 {
     margin-left: 10px;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode';
+    font-family:'Courier New', Courier, monospace;
     font-size: 20px;
     color: rgb(255, 255, 255);
 }
