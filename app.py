@@ -168,7 +168,7 @@ def post_tv_to_database():
     title = request.args.get('title')
     show_id = request.args.get('id')
     liked = request.args.get('liked')
-    print(title)
+    #print(title)
     
     #posting to db (shows)
     if "email" in session:
@@ -359,8 +359,7 @@ def movies_recommendations():
             return render_template("movie_recommendations.html", recommended_movie_information=filtered_movie_information, json_data_movie_genre=json_data_movie_genre)
 
                             
-            
-        return render_template("movie_recommendations.html", recommended_movie_information=recommended_movie_information, json_data_movie_genre=json_data_movie_genre, filtered_genres=filtered_genres, filtered_runtime=filtered_runtime )
+        return render_template("movie_recommendations.html", recommended_movie_information=recommended_movie_information, json_data_movie_genre=json_data_movie_genre, filtered_genres=filtered_genres, filtered_runtime=filtered_runtime)
 
 
 
@@ -415,35 +414,55 @@ def tv_recommendations():
             recommended_shows_information.append(temp_dict.copy())
 
 
-    #getting the genres of all movies using the tmdb api
+        #getting the genres of all movies using the tmdb api
         get_genre_endpoint = "https://api.themoviedb.org/3/genre/tv/list?api_key=586f9b611ec26170fbc7b228645fa5ca"
         response_get_genre = tmdb_session.get(get_genre_endpoint)
         json_data_show_genre = json.loads(response_get_genre.text)
         #assign filtered_genres to None because there are no filters when user first comes to the recommendations page
         filtered_genres = None
+        filtered_runtime = None
         #get all the genre id's that the user filtered in the movies_recommendations.html page 
         if request.method == "POST":
             filtered_genres = request.form.getlist('genre_checkbox')
+            filtered_runtime = str(request.form.getlist('runtime')[0])
            
-        #if filtered_generes exists, then update the list of recommended movies with only the filtered genres
-        if filtered_genres:
-            
+
+
+        if filtered_genres or filtered_runtime:
             filtered_list = []
-            
+        #if filtered_generes exists, then update the list of recommended movies with only the filtered genres
             for show in recommended_shows_information:
                 temp_show_id = show["id"]
-                #for each movie in users recommendations, we grab the id and run the movies_details endpoint to get information on the genres of that specific movie
+                #for each show in users recommendations, we grab the id and run the show_details endpoint to get information on the genres of that specific movie
                 #then compare if the movie falls under the list of genres the user picked. if yes then add to recommendations, if not then dont show in recommendations
                 get_show_information_endpoint = "https://api.themoviedb.org/3/tv/{}?api_key=586f9b611ec26170fbc7b228645fa5ca".format(temp_show_id)
                 get_show_information = tmdb_session.get(get_show_information_endpoint)
                 json_data_show_information = json.loads(get_show_information.text)
 
-                #checks if the genre id of the movie is in the user's genre filters. if yes then it adds the movie_id to the filtered_list
-                for genre_id in json_data_show_information["genres"]:                   
-                    if str(genre_id["id"]) in filtered_genres:
-                        filtered_list.append(temp_show_id)
+                show_run_time = int(json_data_show_information["episode_run_time"][0])
 
-            #finds the movie title of the filtered movie ids and returns them to the html page
+                if filtered_runtime == "less_than_twenty_five":
+                    if show_run_time > 25:
+                        continue
+
+                elif filtered_runtime == "twenty_five_to_forty_five":
+                    if show_run_time < 25 or show_run_time > 45:
+                        continue
+
+                elif filtered_runtime == "forty_five_above":
+                    if show_run_time < 45:
+                        continue
+
+                #puts all the genres of that specific show into genre_id_list and then checks if the filtered_list is a subset of the genre_id_list.
+                #if it is a subset, then add the show to filtered_list
+                genre_id_list = []
+                for genre_id in json_data_show_information["genres"]:
+                    genre_id_list.append(str(genre_id["id"]))
+   
+                if set(filtered_genres).issubset(genre_id_list):
+                    filtered_list.append(temp_show_id)
+
+            #finds the show title of the filtered show ids and returns them to the html page
             filtered_show_information = []
             for show_name in filtered_list:
                 endpointShow = "https://api.themoviedb.org/3/tv/{}?api_key=586f9b611ec26170fbc7b228645fa5ca".format(show_name)
@@ -456,8 +475,7 @@ def tv_recommendations():
             return render_template("tv_recommendations.html", recommended_shows_information=filtered_show_information, json_data_show_genre=json_data_show_genre)
 
         return render_template("tv_recommendations.html", recommended_shows_information=recommended_shows_information, json_data_show_genre=json_data_show_genre)
-    else:
-        return "<h1 style='background-color:red;'>stop fkin wth our code</h1>"
+    
 
     #Recommendation list of a specific movie that user picks.
 

@@ -16,6 +16,7 @@
                                                 <label>&nbsp;Genre:</label><br/>
                                                 {% for movie_genre in json_data_movie_genre['genres'] %}
                                                 <a class="dropdown-item">{{ movie_genre['name'] }} <input type="checkbox" name="genre_checkbox" value="{{ movie_genre['id'] }}" ></a>
+
                                                 {% endfor %}
                                                 <label>&nbsp;Runtime:</label><br/>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" checked="checked" name="runtime" id="any" value="any" autocomplete="off"> Any <br/>
@@ -27,12 +28,7 @@
                                 </div>
                                 <input  type='submit' value="Apply Filter" form="genre_filter_form">
                         </div>
-                       
                 </div>
-               
-                
-                
-          
         </div>
 </div>
 
@@ -44,6 +40,7 @@
                 {% for movie_title in recommended_movie_information %}
                         <div class ="row" id= "movieblock">
                                 <h2 id="displaytitle">{{ movie_title['title'] }}</h2>
+                                <img src = "https://image.tmdb.org/t/p/original{{json_data_movie['poster_path']}}" ></img>                               
                         </div>
                 {% endfor %}
         </div>

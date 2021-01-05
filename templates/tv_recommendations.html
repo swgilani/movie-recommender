@@ -3,27 +3,37 @@
 {% block content %} 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel ="stylesheet" type ="text/css" href = "{{ url_for('static', filename='main.css') }}">
-<div class = "container">
+<div class = "container" >
         <div class ="row" id = "filtercontainer">
                 <div class = "col-4"><h3 id="heading3">Filters: </h3></div>
-                <div class = "col-2" >
+                <div class = "col-4">
                         <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Genre Filter
+                                        Filters
                                 </button>
                                 <div class ="dropdown-menu">
-                                        <form method="POST" action="{{ url_for('tv_recommendations') }}">
+                                        <form id="genre_filter_form" method="POST" action="{{ url_for('tv_recommendations') }}">
+                                                <label>&nbsp;Genre:</label><br/>
                                                 {% for show_genre in json_data_show_genre['genres'] %}
                                                 <a class="dropdown-item">{{ show_genre['name'] }} <input type="checkbox" name="genre_checkbox" value="{{ show_genre['id'] }}" ></a>
                                                 {% endfor %}
-                                                <div class="dropdown-divider"></div>
-                                                <input type='submit' value="Genre Filter">
+                                                <label>&nbsp;Runtime:</label><br/>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" checked="checked" name="runtime" id="any" value="any" autocomplete="off"> Any <br/>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="runtime" id="less_than_twenty_five" value="less_than_twenty_five" autocomplete="off"> Less than 25 mins<br/>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="runtime" id="twenty_five_to_forty_five" value="twenty_five_to_forty_five" autocomplete="off"> 25 to 45 mins <br/>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="runtime" id="forty_five_above" value="forty_five_above" autocomplete="off"> 45mins+ <br/> 
                                         </form>
                                 </div>
+                                <input  type='submit' value="Apply Filter" form="genre_filter_form">
                         </div>
+                       
                 </div>
+               
+                
+                
+          
         </div>
-</div>        
+</div>     
 
 <div class = "container">
         <div class ="row" id= "filtercontainer">
