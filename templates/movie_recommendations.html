@@ -9,24 +9,27 @@
                 <div class = "col-4">
                         <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Genre Filter
+                                        Filters
                                 </button>
                                 <div class ="dropdown-menu">
                                         <form id="genre_filter_form" method="POST" action="{{ url_for('movies_recommendations') }}">
+                                                <label>&nbsp;Genre:</label><br/>
                                                 {% for movie_genre in json_data_movie_genre['genres'] %}
                                                 <a class="dropdown-item">{{ movie_genre['name'] }} <input type="checkbox" name="genre_checkbox" value="{{ movie_genre['id'] }}" ></a>
                                                 {% endfor %}
-                                                <label>Runtime Filters:</label><br/>
-                                                <input type="radio" name="runtime" id="less_than_hour" value="less_than_hour" autocomplete="off"> Less than an hour <br/>
-                                                <input type="radio" name="runtime" id="hour_to_hour_half" value="hour_to_hour_half" autocomplete="off"> One hour to hour and half <br/>
-                                                <input type="radio" name="runtime" id="hour_half_to_two_hours" value="hour_half_to_two_hours" autocomplete="off"> Hour and half to two hours <br/> 
-                                                <input type="radio" name="runtime" id="more_than_two_hours" value="more_than_two_hours" autocomplete="off"> Two hours and above
+                                                <label>&nbsp;Runtime:</label><br/>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" checked="checked" name="runtime" id="any" value="any" autocomplete="off"> Any <br/>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="runtime" id="less_than_hour" value="less_than_hour" autocomplete="off"> Less than 1 hr<br/>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="runtime" id="hour_to_hour_half" value="hour_to_hour_half" autocomplete="off"> 1hr to 1hr30 <br/>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="runtime" id="hour_half_to_two_hours" value="hour_half_to_two_hours" autocomplete="off"> 1hr30 to 2hr <br/> 
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="runtime" id="more_than_two_hours" value="more_than_two_hours" autocomplete="off"> 2hr+
                                         </form>
                                 </div>
                                 <input  type='submit' value="Apply Filter" form="genre_filter_form">
                         </div>
                        
                 </div>
+               
                 
                 
           

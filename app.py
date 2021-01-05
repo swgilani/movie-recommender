@@ -298,12 +298,16 @@ def movies_recommendations():
         get_runtime_endpoint = "https://api.themoviedb.org/3/movie/ { } /?api_key=586f9b611ec26170fbc7b228645fa5ca"
         #assign filtered_genres to None because there are no filters when user first comes to the recommendations page
         filtered_genres = None
+        filtered_runtime = None
         #get all the genre id's that the user filtered in the movies_recommendations.html page 
         if request.method == "POST":
             filtered_genres = request.form.getlist('genre_checkbox')
+            filtered_runtime = str(request.form.getlist('runtime')[0])
+
+
            
         #if filtered_generes exists, then update the list of recommended movies with only the filtered genres
-        if filtered_genres:
+        if filtered_genres or filtered_runtime:
             filtered_list = []
             
             for movie in recommended_movie_information:
@@ -314,10 +318,33 @@ def movies_recommendations():
                 get_movie_information = tmdb_session.get(get_movie_information_endpoint)
                 json_data_movie_information = json.loads(get_movie_information.text)
 
-                #checks if the genre id of the movie is in the user's genre filters. if yes then it adds the movie_id to the filtered_list
+                movie_run_time = int(json_data_movie_information["runtime"])
+
+                if filtered_runtime == "less_than_hour":
+                    if movie_run_time > 60:
+                        continue
+
+                elif filtered_runtime == "hour_to_hour_half":
+                    if movie_run_time < 60 or movie_run_time > 90:
+                        continue
+
+                elif filtered_runtime == "hour_half_to_two_hours":
+                    if movie_run_time < 90 or movie_run_time > 120:
+                        continue
+
+                elif filtered_runtime == "more_than_two_hours":
+                    if movie_run_time < 120:
+                        continue
+
+                #puts all the genres of that specific movie into genre_id_list and then checks if the filtered_list is a subset of the genre_id_list.
+                #if it is a subset, then add the movie to filtered_list
+                genre_id_list = []
                 for genre_id in json_data_movie_information["genres"]:
-                    if str(genre_id["id"]) in filtered_genres:
-                        filtered_list.append(temp_movie_id)
+                    genre_id_list.append(str(genre_id["id"]))
+   
+                if set(filtered_genres).issubset(genre_id_list):
+                    filtered_list.append(temp_movie_id)
+                    
 
             #finds the movie title of the filtered movie ids and returns them to the html page
             filtered_movie_information = []
@@ -333,11 +360,7 @@ def movies_recommendations():
 
                             
             
-        return render_template("movie_recommendations.html", recommended_movie_information=recommended_movie_information, json_data_movie_genre=json_data_movie_genre )
-
-    else:
-        return "<h1 style='background-color:red;'>stop fkin wth our code</h1>"
-
+        return render_template("movie_recommendations.html", recommended_movie_information=recommended_movie_information, json_data_movie_genre=json_data_movie_genre, filtered_genres=filtered_genres, filtered_runtime=filtered_runtime )
 
 
 
@@ -429,7 +452,6 @@ def tv_recommendations():
 
                 temp_dict = {"id":json_data_show["id"], "title":json_data_show['name']}
                 filtered_show_information.append(temp_dict.copy())
-                print(filtered_show_information)
 
             return render_template("tv_recommendations.html", recommended_shows_information=filtered_show_information, json_data_show_genre=json_data_show_genre)
 
@@ -446,12 +468,12 @@ def recommendations_one(recommendation_id):
 
 
     if type_of_content == 'movie':
-        print(recommendation_id)
+        
         endpoint_recommendation= "https://api.themoviedb.org/3/movie/{}/recommendations?api_key=586f9b611ec26170fbc7b228645fa5ca".format(recommendation_id)
     
 
     elif type_of_content == 'show': 
-        print(recommendation_id)
+        
         endpoint_recommendation= "https://api.themoviedb.org/3/tv/{}/recommendations?api_key=586f9b611ec26170fbc7b228645fa5ca".format(recommendation_id)
 
 

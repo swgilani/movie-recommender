@@ -25,17 +25,19 @@
               <div class="navbar-nav mr-auto">
                 <a class="nav-item nav-link" href="{{url_for('index')}}">Home</a>
                 {% if "email" in session: %}
-                <a class="nav-item nav-link" href="{{url_for('search')}}">Find a Movie!</a>
-                <a class="nav-item nav-link" href="{{url_for('tv_recommendations')}}">TV Recommendations</a>
-                <a class="nav-item nav-link" href="{{url_for('movies_recommendations')}}">Movie Recommendations</a>
+                <a class="nav-item nav-link" href="{{url_for('search')}}">Search</a>
+                <a class="nav-item nav-link" href="{{url_for('tv_recommendations')}}">TV</a>
+                <a class="nav-item nav-link" href="{{url_for('movies_recommendations')}}">Movie</a>
                 <a class="nav-item nav-link" href="{{url_for('show_user_content')}}">Viewing History</a>
                 {%endif%}
                 <a class="nav-item nav-link" href="{{url_for('about')}}">About</a>
               </div>
               <!-- Navbar Right Side -->
               <div class="navbar-nav ">
+                {% if "email" not in session: %}
                 <a class="nav-item nav-link" href="{{url_for('login')}}">Login</a>
                 <a class="nav-item nav-link" href="{{url_for('register')}}">Register</a>
+                {%endif%}
                 {% if "email" in session: %}
                 <a class = "nav-item nav-link" href="{{ url_for('logout')}}">Logout</a> 
                 {%endif%}
