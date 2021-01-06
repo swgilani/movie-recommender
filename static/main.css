@@ -1,7 +1,7 @@
 body {
-  background: #100035;
   color: #333333;
-  margin-top: 5rem;
+  background-image: url(background.png);
+  background-image: linear-gradient(rgb(5, 3, 92)rgba(72, 104, 163, 0.322), rgb(90, 181, 218));
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -9,7 +9,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .bg-steel {
-  background-color: #008df1;
+  background-color: #323232;
 }
 
 .site-header .navbar-nav .nav-link {
@@ -82,7 +82,7 @@ a.article-title:hover {
 #filtercontainer
 {
   padding: 20px 20px;
-  background-color:  #1a0e38;
+  background-color:  #53354a;
   border-style:solid;
   border-radius: 20px;
   margin-top: 10pt;
@@ -90,18 +90,19 @@ a.article-title:hover {
 }
 
 #siteheader{
-  background-color: #3c1c77;
+  background-color: #361313;
 }
 
 #maincontainer
 {
   border-radius: 20px;
+  background:#323232;
 }
 
 #heading1
 {
     margin-top: 20px;
-    font-family: 'Righteous', cursive;
+    font-family:'Courier New', Courier, monospace;
     font-size: 75px;
     color: rgb(255, 255, 255);
 }
@@ -109,7 +110,7 @@ a.article-title:hover {
 #heading1container
 {
 
-  background: #170b31;
+  background:#111320;
   padding: 20px 20px;
   border-style:solid;
   border-radius: 20px;
@@ -123,7 +124,6 @@ a.article-title:hover {
 {
     font-family:'Courier New', Courier, monospace;
     border-radius: 10px;
-    font-family: 'Righteous', cursive;
     font-size: 50px;
     text-align: center;
     color: rgb(255, 255, 255);
@@ -132,7 +132,7 @@ a.article-title:hover {
 #heading2container
 {
   
-  background:#230e52;
+  background: #53354a;
   padding: 10px 20px #dddddd;
   border-radius: 20px;
   margin-left:50pt;
@@ -150,16 +150,16 @@ a.article-title:hover {
 
 #list{
   font-family:'Courier New', Courier, monospace;
-  background: #032c3f;
+  background: #8ad7c1;
   padding: 20px 20px;
   border: 1px solid;
   border-radius: 10px;
-  margin: auto;
+  margin-top: 10pt;
   color: white;
 }
 
 #movieblock{
-  background-color: #122a3d;
+  background-color:#5eaaa8;
   padding: 20px 20px;
   border-style:solid;
   border-radius: 20px;

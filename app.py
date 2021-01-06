@@ -167,18 +167,31 @@ def post_tv_to_database():
     #getting title and id 
     title = request.args.get('title')
     show_id = request.args.get('id')
-    liked = request.args.get('liked')
+    user_choice = request.args.get('liked')
     #print(title)
     
     #posting to db (shows)
     if "email" in session:
 
-        #like=1, not liked = 0
-        post1 = {"show_id": show_id, "email": session['email'], "Title": title, "liked": liked}
-    #check if the id exists in the db collection already
+        #like = 1, not liked = 0
+        post1 = {"show_id": show_id, "email": session['email'], "Title": title, "liked": user_choice}
+        #check if the id exists in the db collection already
         exists = mongo.db.shows.find_one({"show_id": show_id, "email": session['email']})
+        exists_liked = mongo.db.shows.find_one({"show_id": show_id, "email": session['email'], "liked": '1'})
+        exists_disliked = mongo.db.shows.find_one({"show_id": show_id, "email": session['email'], "liked": '0'})
+
+
         if exists: 
-            print("this show is already in the user's database")
+            if user_choice == "0":
+                mongo.db.shows.update_one({"show_id": show_id, "email": session['email'], "Title": title}, {"$set": {"liked": "0"}})
+                print("disliked movie")
+            elif user_choice == "1":
+                mongo.db.shows.update_one({"show_id": show_id, "email": session['email'], "Title": title}, {"$set": {"liked": "1"}})
+                print("liked movie")
+
+            else:
+                return "some shit went wrong"
+
             return render_template("search.html")
 
         else:
@@ -223,7 +236,6 @@ def delete_show_from_db():
 
     
     return redirect(url_for('show_user_content')) 
-
 
 
 ################################################################################################################
@@ -286,7 +298,7 @@ def movies_recommendations():
             responseMovie = tmdb_session.get(endpointMovie)
             json_data_movie = json.loads(responseMovie.text) 
 
-            temp_dict = {"id":json_data_movie["id"], "title":json_data_movie['original_title']}
+            temp_dict = {"id":json_data_movie["id"], "title":json_data_movie['original_title'], "poster":json_data_movie["poster_path"], "overview":json_data_movie['overview'], "rating":json_data_movie['vote_average']}
             recommended_movie_information.append(temp_dict.copy())
 
 
@@ -353,7 +365,7 @@ def movies_recommendations():
                 responseMovie = tmdb_session.get(endpointMovie)
                 json_data_movie = json.loads(responseMovie.text) 
 
-                temp_dict = {"id":json_data_movie["id"], "title":json_data_movie['original_title']}
+                temp_dict = {"id":json_data_movie["id"], "title":json_data_movie['original_title'],"poster":json_data_movie["poster_path"], "overview":json_data_movie['overview'], "rating":json_data_movie['vote_average']}
                 filtered_movie_information.append(temp_dict.copy())
 
             return render_template("movie_recommendations.html", recommended_movie_information=filtered_movie_information, json_data_movie_genre=json_data_movie_genre)
@@ -370,7 +382,7 @@ def tv_recommendations():
         #GOD CODE 2.0!!
         tmdb_session = requests.Session()
 
-        cursor_object = mongo.db.shows.find({"email": session["email"]})
+        cursor_object = mongo.db.shows.find({"email": session["email"], "liked": "1"})
         
         id_list = []
         
@@ -410,7 +422,7 @@ def tv_recommendations():
             responseShow = tmdb_session.get(endpointShow)
             json_data_show = json.loads(responseShow.text) 
 
-            temp_dict = {"id":json_data_show["id"], "title":json_data_show['name']}
+            temp_dict = {"id":json_data_show["id"], "title":json_data_show['name'], "poster":json_data_show["poster_path"],  "overview":json_data_show['overview'], "rating":json_data_show['vote_average']}
             recommended_shows_information.append(temp_dict.copy())
 
 
@@ -469,7 +481,7 @@ def tv_recommendations():
                 responseShow = tmdb_session.get(endpointShow)
                 json_data_show = json.loads(responseShow.text) 
 
-                temp_dict = {"id":json_data_show["id"], "title":json_data_show['name']}
+                temp_dict = {"id":json_data_show["id"], "title":json_data_show['name'], "poster":json_data_show["poster_path"],  "overview":json_data_show['overview'], "rating":json_data_show['vote_average']}
                 filtered_show_information.append(temp_dict.copy())
 
             return render_template("tv_recommendations.html", recommended_shows_information=filtered_show_information, json_data_show_genre=json_data_show_genre)

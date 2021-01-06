@@ -28,10 +28,7 @@
                         </div>
                        
                 </div>
-               
-                
-                
-          
+
         </div>
 </div>     
 
@@ -42,7 +39,10 @@
         <div class ="row" id= "heading1container">
                 {% for show_title in recommended_shows_information %}
                 <div class ="row" id= "movieblock">
-                        <h1 id="displaytitle">{{ show_title['title'] }}</h1>
+                        <a href="{{url_for('content_info', title= show_title['title'], id = show_title['id'], poster = show_title['poster'], overview = show_title['overview'], rating = show_title['rating'], content_type = 'tv' )}}" id="displaytitle">  {{ show_title['title'] }} 
+                
+                        <img src = "https://image.tmdb.org/t/p/original{{ show_title['poster']}}" style="width: 30%" ></img>                               
+                        </a>
                 </div>
                 {% endfor %}
         </div>
