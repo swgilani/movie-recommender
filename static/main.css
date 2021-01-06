@@ -1,7 +1,6 @@
 body {
   color: #333333;
   background-image: url(background.png);
-  background-image: linear-gradient(rgb(5, 3, 92)rgba(72, 104, 163, 0.322), rgb(90, 181, 218));
 }
 
 h1, h2, h3, h4, h5, h6 {
