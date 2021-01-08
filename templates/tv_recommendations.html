@@ -36,10 +36,11 @@
         <div class ="row" id= "filtercontainer">
                 <h1 id="heading1"> Your Recommendations </h1>
         </div>
-        <div class ="row" id= "heading1container">
+
+        <div class ="col" id= "heading1container">
                 {% for show_title in recommended_shows_information %}
-                <div class ="row" id= "movieblock">
-                        <a href="{{url_for('content_info', title= show_title['title'], id = show_title['id'], poster = show_title['poster'], overview = show_title['overview'], rating = show_title['rating'], content_type = 'tv' )}}" id="displaytitle">  {{ show_title['title'] }} 
+                <div class ="row-3" id= "movieblock">
+                        <a href="{{url_for('content_info', id = show_title['id'], content_type = 'tv' )}}" id="displaytitle">  {{ show_title['title'] }} 
                 
                         <img src = "https://image.tmdb.org/t/p/original{{ show_title['poster']}}" style="width: 30%" ></img>                               
                         </a>

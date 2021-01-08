@@ -2,8 +2,46 @@
 {% block content %}
 
 
+<div class = "container">
+        <div class ="row" id = "filtercontainer">
+                <h1 id="heading1"> Recommendations for {{title}} </h1>
+        </div>
+        <div class ="col" id= "heading1container">
+
+        {% if type_of_content == 'movie' %}
+
+            {% for data in json_data_content['results'] %}
+
+                <div id ="movieblock" class ="row-3">
+                    <div id = "col-2">
+                        <a href="{{url_for('content_info', id = data['id'], content_type = 'movie' )}}" id="displaytitle">
+                        {{ data['title'] }}
+                        <img src = "https://image.tmdb.org/t/p/original{{ data['poster_path']}}"  style="width: 30%"  ></img>
+                        </a>
+                    </div>             
+                </div>  
+
+ 
+            {% endfor %}
+        {%endif %}
 
 
+        {% if type_of_content == 'show' %}
+            {% for data in json_data_content['results'] %}
 
+                <div id ="movieblock" class ="row-3">
+                    <div id = "col-2">
+                        <a href="{{url_for('content_info', id = data['id'], content_type = 'movie' )}}" id="displaytitle">
+                        {{ data['name'] }}
+                        <img src = "https://image.tmdb.org/t/p/original{{ data['poster_path']}}"  style="width: 30%"  ></img>
+                        </a>
+                    </div>             
+                </div> 
+
+            {% endfor %}
+        {%endif %}
+
+        </div>
+</div>
 
 {% endblock %}

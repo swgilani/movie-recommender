@@ -15,7 +15,8 @@
                         <form method="POST" action="{{ url_for('delete_movie_from_db') }}">
                             {% for document in cursor_movies: %}
                                 <div class ="row" id = "usercontent">
-                                    <div class ="col"><label style="margin: 15px"><a href="{{url_for('recommendations_one', recommendation_id = document['movie_id'], type = 'movie' )}}" id="list">  {{ document["Title"] }} </a></label></div>
+                                    <div class ="col"><label style="margin: 15px"><a href="{{url_for('content_info', id = document['movie_id'], content_type = 'movie' )}}" id="list">   {{ document["Title"] }} </a></label></div>
+
                                     <div class ="col-2"><input type="checkbox" name="delete_checkbox" value="{{ document['movie_id'] }}" ></div>
                                 </div>
                             {% endfor %}
@@ -32,7 +33,7 @@
                     <form method="POST" action="{{ url_for('delete_show_from_db') }}">
                     {% for document in cursor_tv: %}
                         <div class ="row" id = "usercontent">
-                            <div class ="col"><label style="margin: 15px"><a href="{{url_for('recommendations_one', recommendation_id = document['show_id'], type = 'show' )}}" id="list">  {{ document["Title"] }} </a></label></div>
+                            <div class ="col"><label style="margin: 15px"><a href="{{url_for('content_info', id = document['show_id'], content_type = 'tv' )}}" id="list">  {{ document["Title"] }} </a></label></div>
                             <div class ="col-2"><input type="checkbox" name="delete_checkbox" value="{{ document['show_id'] }}" ></div>
                         </div>
                     {% endfor %}

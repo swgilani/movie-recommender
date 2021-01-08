@@ -113,15 +113,39 @@ def searchmovie(movie):
 @app.route("/content_info", methods=["POST","GET"])
 def content_info():
 
-    poster = request.args.get('poster')
-    title = request.args.get('title')
-    movie_id = request.args.get('id')
-    rating = request.args.get('rating')
-    overview = request.args.get('overview')
+    content_id =  request.args.get('id')
     content_type = request.args.get('content_type')
 
+    #if the content is a tv show, it will get the info from the endpoint and store the needed info in variables to display in the html  
+    if content_type == 'tv':
+        print("this is a tv show")
+        endpoint_search = "https://api.themoviedb.org/3/tv/{}?api_key=586f9b611ec26170fbc7b228645fa5ca&language=en-US".format(content_id)
+        responseContent = requests.get(endpoint_search)
+        json_data_content = json.loads(responseContent.text)
+        #initializing info 
+        poster = json_data_content["poster_path"]
+        print(poster)
+        title = json_data_content['name']
+        rating = json_data_content['vote_average']
+        overview = json_data_content['overview']
 
-    return render_template("content_info.html", title = title, poster = poster, movie_id = movie_id, overview = overview, rating = rating,content_type = content_type )
+    elif content_type == 'movie':
+        print("this is a movie")
+        endpoint_search = "https://api.themoviedb.org/3/movie/{}?api_key=586f9b611ec26170fbc7b228645fa5ca&language=en-US".format(content_id)
+        responseContent = requests.get(endpoint_search)
+        json_data_content = json.loads(responseContent.text)
+        #initializing info 
+        poster = json_data_content["poster_path"]
+        print(poster)
+        title = json_data_content['title']
+        rating = json_data_content['vote_average']
+        overview = json_data_content['overview']
+        #seasons = json_data_content['number_of_seasons']
+        #episodes = json_data_content['number_of_episodes']
+
+
+
+    return render_template("content_info.html", title = title, poster = poster, content_id = content_id, overview = overview, rating = rating,content_type = content_type )
 
 
 @app.route("/post_movie_to_db", methods=["POST","GET"])
@@ -246,9 +270,12 @@ def show_user_content():
     if "email" in session:
         cursor_movies = mongo.db.movies.find({"email": session["email"]})
         cursor_tv = mongo.db.shows.find({"email": session["email"]})
+
         return render_template("user_content.html", cursor_movies=cursor_movies, cursor_tv=cursor_tv)
 
-    
+
+#a function which 
+
 
 #Recommendation list of all the movies in the user database
 @app.route("/movies_recommendations", methods=["POST","GET"])
@@ -489,28 +516,25 @@ def tv_recommendations():
         return render_template("tv_recommendations.html", recommended_shows_information=recommended_shows_information, json_data_show_genre=json_data_show_genre)
     
 
-    #Recommendation list of a specific movie that user picks.
-
+#Recommendation list of a specific movie that user picks.
 @app.route("/recommendations_one/<recommendation_id>", methods=["POST","GET"])
 def recommendations_one(recommendation_id):
 
     type_of_content = request.args.get('type')
+    title = request.args.get('title')
 
+    #recommendation_id = request.args.get('recommendation_id')
 
     if type_of_content == 'movie':
-        
         endpoint_recommendation= "https://api.themoviedb.org/3/movie/{}/recommendations?api_key=586f9b611ec26170fbc7b228645fa5ca".format(recommendation_id)
     
-
     elif type_of_content == 'show': 
-        
         endpoint_recommendation= "https://api.themoviedb.org/3/tv/{}/recommendations?api_key=586f9b611ec26170fbc7b228645fa5ca".format(recommendation_id)
 
-
     response_recommendation = requests.get(endpoint_recommendation)
-    json_data_movie = json.loads(response_recommendation.text)
-   
-    return json_data_movie
+    json_data_content = json.loads(response_recommendation.text)
+
+    return render_template("view_single_rec.html",type_of_content = type_of_content, recommendation_id = recommendation_id, json_data_content = json_data_content, title = title)
 
 if __name__ == "__main__":
     

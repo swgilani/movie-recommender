@@ -19,7 +19,8 @@
                     </div>
                     <div class="row">
                         <h3 id="heading3">Title:</h3>
-                        <a href="show_title['title']" id ="displaytitle"> {{ data['name'] }} </a>
+                        <a href="{{url_for('content_info',id = data['id'], content_type = 'tv' )}}" id="displaytitle">  {{ data['name'] }} </a>
+
                         <h3 id="heading3">Overview:</h3>
                         <p id = "overview">{{ data['overview'] }}</p>
                     </div>
@@ -41,7 +42,8 @@
                     </div>
                     <div class="row">
                         <h3 id="heading3">Title:</h3>
-                        <a href="show_title['title']" id ="displaytitle"> {{ data['title'] }} </a>
+                        <a href="{{url_for('content_info',id = data['id'], content_type = 'movie' )}}" id="displaytitle">  {{ data['title'] }} </a>
+
                         <h3 id="heading3">Overview:</h3>
                         <p id = "overview">{{ data['overview'] }}</p>
                     </div>
