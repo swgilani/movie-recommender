@@ -31,7 +31,7 @@
 
                 <div id ="movieblock" class ="row-3">
                     <div id = "col-2">
-                        <a href="{{url_for('content_info', id = data['id'], content_type = 'movie' )}}" id="displaytitle">
+                        <a href="{{url_for('content_info', id = data['id'], content_type = 'tv' )}}" id="displaytitle">
                         {{ data['name'] }}
                         <img src = "https://image.tmdb.org/t/p/original{{ data['poster_path']}}"  style="width: 30%"  ></img>
                         </a>
