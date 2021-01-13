@@ -8,8 +8,8 @@
         <form method="POST" action ="">
             {{ form.hidden_tag() }}
             <fieldset class ="form-group">
-                <legend class = "border-bottom mb-4">Registeration</legend>
-                <div class ="form-group">
+                <legend class = "border-bottom mb-4" style="color:white">Registeration</legend>
+                <div class ="form-group" style="color:white">
                     {{ form.username.label(class="form-control-label") }}
                     {% if form.username.errors %}
                         {{ form.username(class="form-control form-control-label-lg is-invalid") }}
@@ -23,7 +23,7 @@
                     {% endif %}
                 </div>
 
-                <div class ="form-group">
+                <div class ="form-group" style="color:white">
                     {{ form.email.label(class="form-control-label") }}
                     {% if form.email.errors %}    
                         {{ form.email(class="form-control form-control-label-lg is-invalid") }}
@@ -37,7 +37,7 @@
                     {% endif %}
                 </div>
 
-                <div class ="form-group">
+                <div class ="form-group" style="color:white">
                     {{ form.password.label(class="form-control-label") }}
                     {% if form.password.errors %}
                         
@@ -51,7 +51,7 @@
                         {{form.password(class="form-control form control -lg")}}
                     {% endif %}
                 </div>  
-                <div class ="form-group">
+                <div class ="form-group" style="color:white">
                     {{ form.confirm_password.label(class="form-control-label") }}
                     {% if form.confirm_password.errors %}   
                         {{ form.confirm_password(class="form-control form-control-label-lg is-invalid") }}
@@ -65,7 +65,7 @@
                     {% endif %}
                 </div>
             </fieldset>
-            <div class = "form-group">
+            <div class = "form-group" style="color:white">
                 {{form.submit(class="btn btn-outline-info")}}
             </div>
         </form>

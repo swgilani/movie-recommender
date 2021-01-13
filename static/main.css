@@ -1,8 +1,8 @@
 
 /*  edges of main divs , Color of text on register and login  */
 body {
-  color: #f4debe  ;
-  background-image: url(bg2.jpg);
+  background-color: #000000  ;
+ 
 }
 
 
@@ -11,7 +11,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .bg-steel {
-  background-color: #f5aa5f;
+  background-color: #000000;
 }
 
 /*  nav bar links   */
@@ -87,7 +87,7 @@ a.article-title:hover {
 #filtercontainer
 {
   padding: 20px 20px;
-  background-color:  #53354a;
+  background-color:  #000000;
   border-style:solid;
   border-radius: 20px;
   margin-top: 10pt;
@@ -96,7 +96,7 @@ a.article-title:hover {
 
 /* nav bar of site */ 
 #siteheader{
-  background-color: #bfa082  ;
+  background-color: #1b1919  ;
 }
 
 /* space between top and bot div on main page idek */ 
@@ -118,7 +118,7 @@ a.article-title:hover {
 /* bg of main divs */ 
 #heading1container
 {
-  background:#674e4d ;
+  background:#000000 ;
   padding: 20px 20px;
   border-style:solid;
   border-radius: 20px;
@@ -140,7 +140,7 @@ a.article-title:hover {
 /* container for entire tv/movie section */ 
 #heading2container
 {
-  background: #9eb291    ;
+  background: #000000    ;
   padding: 10px 20px #dddddd;
   border-radius: 20px;
   margin-left:50pt;
@@ -168,7 +168,7 @@ a.article-title:hover {
 
 /* container for indiv tv/movie  */ 
 #movieblock{
-  background-color:#bfa082   ;
+  background-color:#000000   ;
   padding: 20px 20px;
   border-style:solid;
   border-radius: 20px;
