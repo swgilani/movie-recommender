@@ -145,7 +145,7 @@ def content_info():
 
 
 
-    return render_template("content_info.html", title = title, poster = poster, content_id = content_id, overview = overview, rating = rating,content_type = content_type )
+    return render_template("content_Info.html", title = title, poster = poster, content_id = content_id, overview = overview, rating = rating,content_type = content_type )
 
 
 @app.route("/post_movie_to_db", methods=["POST","GET"])
