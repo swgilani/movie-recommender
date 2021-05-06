@@ -10,8 +10,8 @@ import random
 import time
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '5f12bb0e4dc6ed2d01ba6ac064416f42'
-app.config["MONGO_URI"] = 'mongodb+srv://wasiq:password123password@cluster0.g3f41.mongodb.net/application?retryWrites=true&w=majority'
+app.config['SECRET_KEY'] = 'SECRET_KEY'
+app.config["MONGO_URI"] = 'MONGO_URI'
 app.debug = True
 mongo = PyMongo(app)
 bcrypt = Bcrypt(app)
